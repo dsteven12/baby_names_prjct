@@ -91,6 +91,14 @@ public class BabyBirths {
             return name;
     }    
     
+    public void whatIsNameInYear(String name, int year, int newYear, String gender) {
+        int rank = getRank(year, name, gender);
+        String nameInOtherFile = getName(newYear, rank, gender);
+        
+        System.out.println(name + " born in " + year + " would be " + 
+            nameInOtherFile + " if she was born in " + newYear + ".");
+    }
+    
     public void testTotalBirths () {
         //FileResource fr = new FileResource();
         FileResource fr = new FileResource("data/yob2014.csv");
