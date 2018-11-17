@@ -45,7 +45,7 @@ public class BabyBirths {
         System.out.println("male boys = " + totalBoys);
         System.out.println("total births (by name) = " + totalCount);
         System.out.println("female girls (by name)= " + countGirls);
-        System.out.println("male boys (by name) = " + countBoys);
+        System.out.println("male boys = " + countBoys);
     }
     
     public int getRank(int year, String name, String gender, FileResource fr) {
@@ -123,18 +123,17 @@ public class BabyBirths {
             int currYear = Integer.parseInt(fileName.substring(startPos + 3, startPos + 7));
             //Gets rank of file based on year, name, gender, and file resource.
             int currRank = getRank(currYear, name, gender, fr);
-            
-            if(yearWithBestRank == 0) {
+            if (currRank == -1) {
+                currRank = 9999;
+            }
+            if (yearWithBestRank == 0)  {
                 yearWithBestRank = currYear;
                 tempRank = currRank;
-            } 
-            
-            if (currRank != -1) {
-                if (currRank < tempRank) {
-                    yearWithBestRank = currYear;
-                    tempRank = currRank;
-                }
+            } else if (currRank < tempRank) {
+                yearWithBestRank = currYear;
+                tempRank = currRank;
             }
+
         }
         return yearWithBestRank;
     }
@@ -198,9 +197,11 @@ public class BabyBirths {
             if(cGender.equals(gender)) {
                 rank += 1;
                 totalBirthsHigherThanRank += cNumBirths;
+                System.out.println(totalBirthsHigherThanRank + " " + rank);
                 if(cName.equals(name)) {
                     found = true;
                     totalBirthsHigherThanRank -= cNumBirths;
+                    System.out.println("Closing: " + totalBirthsHigherThanRank + " " + rank);
                     break;
                 }
             }            
@@ -220,6 +221,9 @@ public class BabyBirths {
     
     public void testGetRank() {
         FileResource fr = new FileResource();
+        System.out.println(getRank(1960, "Emily", "F", fr));
+        
+        fr = new FileResource();
         System.out.println(getRank(1971, "Frank", "M", fr));
         
     }
@@ -234,14 +238,9 @@ public class BabyBirths {
     
     public void testGetTotalBirthsRankedHigher() {
         FileResource fr = new FileResource();
-        System.out.println(getTotalBirthsRankedHigher(1990, "Drew", "M", fr));
+        System.out.println(getTotalBirthsRankedHigher(1990, "Emily", "F", fr));
     }
+    
 
-    /* In which year from 1880 to 2014 does the boy’s name 
-     * "Mich" have the highest rank (over all the data files)?
-     * If there is more than one year with the highest rank, choose the earliest one.
-     * Some names may appear in some years but not in others. 
-     * Make sure your code correctly handles the case where a name appears 
-     * in some years but not in others. */
     // TotalBirthsRankedHigher
 }
